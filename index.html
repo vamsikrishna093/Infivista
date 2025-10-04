@@ -344,10 +344,10 @@
                         AI-powered observability, cloud infrastructure, IoT innovation, and automation — built for business outcomes.
                     </p>
                     <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                        <button class="bg-accent-gradient px-10 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition pulse-glow">
+                        <button id="explore-solutions-btn" class="bg-accent-gradient px-10 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition pulse-glow nav-tab" data-page="home" data-scroll="#solutions">
                             Explore Solutions
                         </button>
-                        <button class="border-2 border-blue-400 text-blue-400 px-10 py-4 rounded-full font-semibold text-lg hover:bg-blue-400/10 transition">
+                        <button id="schedule-demo-btn" class="border-2 border-blue-400 text-blue-400 px-10 py-4 rounded-full font-semibold text-lg hover:bg-blue-400/10 transition">
                             Schedule Demo
                         </button>
                     </div>
@@ -356,7 +356,7 @@
     </section>
 
     <!-- Solution Cards -->
-        <section class="py-20 bg-slate-900/50">
+        <section id="solutions" class="py-20 bg-slate-900/50">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-16">
                     <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6">Our <span class="text-gradient">Solutions</span></h2>
@@ -1372,17 +1372,7 @@
             window.addEventListener('hashchange', openHashTarget);
             openHashTarget();
 
-            // Auto-open docs demo when user lands on site root (no hash)
-            if (!location.hash || location.hash === '#') {
-                // Small delay to allow initial rendering
-                setTimeout(() => {
-                    showPage('docs');
-                    setTimeout(() => {
-                        const el = document.querySelector('#product-demo');
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 300);
-                }, 300);
-            }
+            // (removed) Auto-open docs demo on root to keep Home visible after refresh
 
             // Watch Demo button (header) - opens docs and scrolls to demo
             const watchBtn = document.getElementById('watch-demo-btn');
@@ -1426,3 +1416,95 @@
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96faeb3b22e0c508',t:'MTc1NTI4NDI1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
+<!-- Schedule Demo Modal -->
+<div id="schedule-demo-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+    <div class="bg-card-gradient rounded-2xl p-6 w-full max-w-xl mx-4">
+        <h3 class="text-xl font-semibold mb-4">Request a Demo</h3>
+        <form id="schedule-demo-form" class="space-y-3">
+            <div>
+                <label class="block text-sm">Full name</label>
+                <input name="name" required class="w-full mt-1 p-2 rounded bg-slate-800 border border-slate-700" />
+            </div>
+            <div>
+                <label class="block text-sm">Email</label>
+                <input type="email" name="email" required class="w-full mt-1 p-2 rounded bg-slate-800 border border-slate-700" />
+            </div>
+            <div>
+                <label class="block text-sm">Company</label>
+                <input name="company" class="w-full mt-1 p-2 rounded bg-slate-800 border border-slate-700" />
+            </div>
+            <div>
+                <label class="block text-sm">Preferred date/time</label>
+                <input name="preferred" placeholder="e.g. 2025-10-10 10:00AM" class="w-full mt-1 p-2 rounded bg-slate-800 border border-slate-700" />
+            </div>
+            <div>
+                <label class="block text-sm">Message</label>
+                <textarea name="message" class="w-full mt-1 p-2 rounded bg-slate-800 border border-slate-700"></textarea>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button type="submit" class="bg-blue-600 px-4 py-2 rounded text-white">Submit</button>
+                <button type="button" id="cancel-schedule" class="px-4 py-2 rounded border border-slate-600">Cancel</button>
+            </div>
+            <div id="schedule-msg" class="text-sm text-green-400 mt-2 hidden">Saved — the team will review this request.</div>
+        </form>
+    </div>
+</div>
+
+<!-- Admin Page Section -->
+<div id="admin" class="page-section">
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-semibold">Admin: Demo Requests</h2>
+                <p class="text-sm text-gray-400">Saved demo requests (stored in browser localStorage).</p>
+            </div>
+            <div class="mb-4 flex justify-end space-x-2">
+                <button id="export-requests" class="px-3 py-2 rounded bg-slate-700 text-white">Export JSON</button>
+                <button id="clear-requests" class="px-3 py-2 rounded border border-slate-600">Clear All</button>
+            </div>
+            <div id="requests-list" class="space-y-3"></div>
+        </div>
+    </section>
+</div>
+
+<script>
+// Demo request storage and admin rendering
+function getRequests(){
+    try{const j=localStorage.getItem('infivista_requests');return j?JSON.parse(j):[];}catch(e){return[]}
+}
+function saveRequests(list){localStorage.setItem('infivista_requests', JSON.stringify(list));}
+function renderRequests(){const container=document.getElementById('requests-list');if(!container)return;const list=getRequests();container.innerHTML='';if(list.length===0){container.innerHTML='<div class="text-sm text-gray-400">No requests yet.</div>';return;}list.slice().reverse().forEach(r=>{const el=document.createElement('div');el.className='bg-slate-800 p-4 rounded';el.innerHTML=`<div class="flex justify-between"><div><div class="font-semibold">${escapeHtml(r.name||'[no name]')}</div><div class="text-xs text-gray-400">${escapeHtml(r.email||'')}</div></div><div class="text-xs text-gray-400">${escapeHtml(r.preferred||'')}</div></div><div class="mt-2 text-sm text-gray-300">${escapeHtml(r.message||'')}</div><div class="mt-2 text-xs text-gray-500">${new Date(r.ts).toLocaleString()}</div>`;container.appendChild(el);});}
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    // Open modal
+    const openBtn=document.getElementById('schedule-demo-btn');
+    const modal=document.getElementById('schedule-demo-modal');
+    const form=document.getElementById('schedule-demo-form');
+    const cancelBtn=document.getElementById('cancel-schedule');
+    const msg=document.getElementById('schedule-msg');
+    openBtn && openBtn.addEventListener('click', (e)=>{e.preventDefault();modal.classList.remove('hidden');modal.classList.add('flex');});
+    cancelBtn && cancelBtn.addEventListener('click', (e)=>{modal.classList.add('hidden');modal.classList.remove('flex');});
+
+    form && form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form));
+        if(!data.name || !data.email){alert('Please provide name and email');return}
+        const list = getRequests();
+        list.push(Object.assign({ts:Date.now()}, data));
+        saveRequests(list);
+        msg.classList.remove('hidden');
+        setTimeout(()=>{msg.classList.add('hidden');modal.classList.add('hidden');modal.classList.remove('flex');form.reset();renderRequests();},800);
+    });
+
+    // Admin controls
+    document.getElementById('export-requests')?.addEventListener('click', ()=>{
+        const data=getRequests();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='infivista_requests.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+    });
+    document.getElementById('clear-requests')?.addEventListener('click', ()=>{if(!confirm('Clear all saved requests?'))return;localStorage.removeItem('infivista_requests');renderRequests();});
+
+    // Render admin list if admin page present
+    renderRequests();
+});
+</script>
