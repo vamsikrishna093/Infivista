@@ -1359,6 +1359,18 @@
             window.addEventListener('hashchange', openHashTarget);
             openHashTarget();
 
+            // Auto-open docs demo when user lands on site root (no hash)
+            if (!location.hash || location.hash === '#') {
+                // Small delay to allow initial rendering
+                setTimeout(() => {
+                    showPage('docs');
+                    setTimeout(() => {
+                        const el = document.querySelector('#product-demo');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300);
+                }, 300);
+            }
+
             // Watch Demo button (header) - opens docs and scrolls to demo
             const watchBtn = document.getElementById('watch-demo-btn');
             if (watchBtn) {
