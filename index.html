@@ -295,6 +295,14 @@
         </div>
     </nav>
 
+    <!-- Persistent demo banner (visible site-wide) -->
+    <div class="w-full bg-gradient-to-r from-cyan-600 to-indigo-600 text-white py-3 text-center">
+        <div class="container mx-auto px-4">
+            <span class="font-semibold mr-4">Want to see the product in action?</span>
+            <button id="banner-watch-demo" class="bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded-md font-semibold">Watch Product Demo</button>
+        </div>
+    </div>
+
     <!-- Page 1: Home -->
     <div id="home" class="page-section active">
         <!-- Hero Section -->
@@ -1368,6 +1376,19 @@
             const playCardBtn = document.getElementById('play-demo-card-btn');
             if (playCardBtn) {
                 playCardBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage('docs');
+                    setTimeout(() => {
+                        const el = document.querySelector('#product-demo');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 350);
+                });
+            }
+
+            // Banner watch demo
+            const bannerBtn = document.getElementById('banner-watch-demo');
+            if (bannerBtn) {
+                bannerBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     showPage('docs');
                     setTimeout(() => {
