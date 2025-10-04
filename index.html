@@ -244,8 +244,8 @@
                     <button class="border border-blue-400 text-blue-400 px-6 py-2 rounded-full font-medium hover:bg-blue-400/10 transition">
                         Start Free
                     </button>
-                    <button class="bg-accent-gradient px-6 py-2 rounded-full font-medium hover:opacity-90 transition glow">
-                        Book Demo
+                    <button id="watch-demo-btn" class="bg-accent-gradient px-6 py-2 rounded-full font-medium hover:opacity-90 transition glow">
+                        Watch Demo
                     </button>
                 </div>
                 
@@ -1329,6 +1329,34 @@
                     }
                 }
             });
+            // If the URL contains a hash pointing to docs or the demo, open and scroll
+            function openHashTarget() {
+                const hash = location.hash;
+                if (!hash) return;
+                if (hash === '#docs' || hash === '#product-demo' || hash === '#product-demo' ) {
+                    showPage('docs');
+                    setTimeout(() => {
+                        const el = document.querySelector('#product-demo');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 250);
+                }
+            }
+
+            window.addEventListener('hashchange', openHashTarget);
+            openHashTarget();
+
+            // Watch Demo button (header) - opens docs and scrolls to demo
+            const watchBtn = document.getElementById('watch-demo-btn');
+            if (watchBtn) {
+                watchBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage('docs');
+                    setTimeout(() => {
+                        const el = document.querySelector('#product-demo');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 350);
+                });
+            }
         });
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96faeb3b22e0c508',t:'MTc1NTI4NDI1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
