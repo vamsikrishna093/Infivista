@@ -29,13 +29,13 @@
             font-family: 'Roboto Condensed', 'Inter', sans-serif;
         }
 
-        /* Headings: use Roboto Condensed for a narrow, professional look */
+        /* Headings: use Inter at lighter weight for a modern, open look */
         h1, h2, h3, h4, h5 {
-            font-family: 'Roboto Condensed', 'Inter', sans-serif;
+            font-family: 'Inter', 'Roboto Condensed', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
             font-weight: 400;
             color: #f8fafc;
-            letter-spacing: -0.02em;
-            line-height: 1.05;
+            letter-spacing: 0.01em;
+            line-height: 1.2;
         }
 
         /* Body copy keep Inter (sans) for readability */
@@ -68,16 +68,17 @@
             color: transparent;
         }
         
+        /* reduce heavy glow effects for a cleaner, professional appearance */
         .glow {
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 6px 18px rgba(59, 130, 246, 0.12);
         }
-        
+
         .glow-cyan {
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+            box-shadow: 0 6px 18px rgba(6, 182, 212, 0.10);
         }
-        
+
         .glow-purple {
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+            box-shadow: 0 6px 18px rgba(139, 92, 246, 0.10);
         }
         
         .card {
