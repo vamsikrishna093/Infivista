@@ -1076,7 +1076,7 @@
                             </div>
                             <h3 class="orbitron text-xl font-bold mb-4">Documentation</h3>
                             <p class="text-gray-400 mb-6">Comprehensive guides and tutorials</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition font-semibold">
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition font-semibold nav-tab" data-page="docs" data-scroll="#product-demo">
                                 Browse Docs
                             </button>
                         </div>
@@ -1119,7 +1119,7 @@
                     </div>
 
                     <!-- Product Demo embed (visible within Documentation) -->
-                    <div class="mt-12">
+                    <div id="product-demo" class="mt-12">
                         <div class="max-w-4xl mx-auto bg-glass rounded-2xl p-8">
                             <h3 class="orbitron text-2xl font-bold mb-4">Product Demo</h3>
                             <p class="text-gray-400 mb-4">Watch a short product demo below. The video file is served from the site root.</p>
@@ -1260,13 +1260,20 @@
         }
 
         // Add click listeners to all nav tabs
-        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.addEventListener('click', (e) => {
                     e.preventDefault();
                     const pageId = tab.getAttribute('data-page');
                     if (pageId) {
                         showPage(pageId);
+                        // Optional scroll target after page is shown
+                        if (tab.dataset && tab.dataset.scroll) {
+                            setTimeout(() => {
+                                const el = document.querySelector(tab.dataset.scroll);
+                                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, 350);
+                        }
                     }
                 });
             });
