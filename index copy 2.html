@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infivista - Intelligent Technology Solutions</title>
+    <meta name="description" content="AI-powered observability, cloud infrastructure, IoT innovation, and automation solutions built for business outcomes.">
+    <meta name="keywords" content="observability, cloud infrastructure, IoT, RPA, AI automation, monitoring">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Enhanced Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        'primary': {
+                            50: '#f0f9ff',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        },
+                        'accent': {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.4)' },
+                            '50%': { boxShadow: '0 0 40px rgba(59, 130, 246, 0.8)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)', opacity: '0' },
+                            '50%': { transform: 'translateY(-100px) rotate(180deg)', opacity: '1' }
+                        }
+                    },
+                    backdropBlur: {
+                        'xs': '2px'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0a0e27 0%, #1e1b4b 50%, #312e81 100%);
+            --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            --card-gradient: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
+            --glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+            --hero-gradient: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            scroll-behavior: smooth;
+            background: var(--primary-gradient);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Typography Improvements */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+        }
+        
+        .text-balance {
+            text-wrap: balance;
+        }
+        
+        /* Enhanced Glass Morphism */
+        .glass-card {
+            background: var(--glass-gradient);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Improved Button Styles */
+        .btn-primary {
+            background: var(--accent-gradient);
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Card Hover Effects */
+        .hover-lift {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Navigation Improvements */
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Hero Section Enhancements */
+        .hero-bg {
+            background: var(--primary-gradient), var(--hero-gradient);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s linear infinite;
+        }
+        
+        /* Particle System */
+        .particles-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: linear-gradient(45deg, #60a5fa, #a78bfa);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0;
+        }
+        
+        /* Timeline Improvements */
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding: 2rem 0;
+            padding-left: 4rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2rem;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 3rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: linear-gradient(to bottom, #3b82f6 0%, rgba(59, 130, 246, 0.3) 100%);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        /* Pricing Cards */
+        .pricing-card {
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 2px solid #3b82f6;
+        }
+        
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-gradient);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 25px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Responsive Improvements */
+        @media (max-width: 768px) {
+            .timeline-item {
+                padding-left: 2rem;
+            }
+            
+            .timeline-item::before {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .timeline-item::after {
+                left: 7px;
+            }
+        }
+        
+        /* Loading States */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        /* Accessibility Improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Focus States */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+        }
+        
+        /* Smooth Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Dark mode optimizations */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color-scheme: dark;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white antialiased">
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-50">
+        Skip to main content
+    </a>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 nav-blur transition-all duration-300" id="main-nav">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">I</span>
+                    </div>
+                    <div class="font-bold text-xl">
+                        <span class="text-white">Infi</span><span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">vista</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-1">
+                    <button class="nav-tab active px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/10" data-page="home">Home</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/10" data-page="tech-stack">Technology</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/10" data-page="tiers">Pricing</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/10" data-page="architecture">Solutions</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/10" data-page="portal">Products</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/10" data-page="docs">Resources</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/10" data-page="partners">Partners</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-white/10" data-page="support">Support</button>
+                </div>
+                
+                <!-- Desktop CTAs -->
+                <div class="hidden lg:flex items-center space-x-3">
+                    <button class="border border-blue-400 text-blue-400 px-6 py-2 rounded-full font-medium hover:bg-blue-400/10 transition-all duration-200">
+                        Start Free
+                    </button>
+                    <button id="watch-demo-btn" class="btn-primary px-6 py-2 rounded-full font-medium text-white">
+                        Watch Demo
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors" id="mobile-menu-btn" aria-label="Open mobile menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed top-0 right-0 h-full w-80 max-w-full bg-slate-900/98 backdrop-blur-xl border-l border-slate-700 lg:hidden transform translate-x-full transition-transform duration-300" id="mobile-menu">
+            <div class="p-6 h-full overflow-y-auto">
+                <div class="flex justify-between items-center mb-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">I</span>
+                        </div>
+                        <div class="font-bold text-lg">
+                            <span class="text-white">Infi</span><span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">vista</span>
+                        </div>
+                    </div>
+                    <button class="text-white p-2 rounded-lg hover:bg-white/10 transition-colors" id="close-mobile-menu" aria-label="Close mobile menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="space-y-2 mb-8">
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/10" data-page="home">Home</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/10" data-page="tech-stack">Technology Stack</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/10" data-page="tiers">Pricing & Plans</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/10" data-page="architecture">Solutions</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/10" data-page="portal">Product Portal</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/10" data-page="docs">Resources</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/10" data-page="partners">Partners</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium transition-colors hover:bg-white/10" data-page="support">Support</button>
+                </div>
+                
+                <div class="space-y-3">
+                    <button class="w-full border border-blue-400 text-blue-400 px-6 py-3 rounded-full font-medium hover:bg-blue-400/10 transition-colors">
+                        Start Free Trial
+                    </button>
+                    <button class="w-full btn-primary px-6 py-3 rounded-full font-medium text-white">
+                        Schedule Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Overlay for mobile menu -->
+        <div class="mobile-overlay fixed inset-0 bg-black/50 lg:hidden opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-overlay"></div>
+    </nav>
+
+    <!-- Demo Banner -->
+    <div class="w-full bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 text-white py-3 text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-white/10 animate-pulse"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <span class="font-semibold mr-4">🚀 Want to see our platform in action?</span>
+            <button id="banner-watch-demo" class="bg-white/20 hover:bg-white/30 text-white py-2 px-6 rounded-full font-semibold transition-all duration-200 hover:scale-105">
+                Watch Product Demo
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Page 1: Home -->
+        <div id="home" class="page-section active">
+            <!-- Hero Section -->
+            <section class="hero-bg min-h-screen flex items-center justify-center relative">
+                <div class="particles-container">
+                    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+                    <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+                    <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+                    <div class="particle" style="left: 40%; animation-delay: 3s;"></div>
+                    <div class="particle" style="left: 50%; animation-delay: 4s;"></div>
+                    <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+                    <div class="particle" style="left: 70%; animation-delay: 1.5s;"></div>
+                    <div class="particle" style="left: 80%; animation-delay: 2.5s;"></div>
+                    <div class="particle" style="left: 90%; animation-delay: 3.5s;"></div>
+                </div>
+                
+                <div class="container mx-auto px-4 py-20 relative z-10">
+                    <div class="max-w-6xl mx-auto text-center">
+                        <div class="animate-on-scroll">
+                            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight text-balance">
+                                Intelligent <span class="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">Technology Solutions</span>
+                            </h1>
+                        </div>
+                        <div class="animate-on-scroll" style="animation-delay: 0.2s;">
+                            <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed text-balance">
+                                AI-powered observability, cloud infrastructure, IoT innovation, and automation — built for <strong class="text-white">business outcomes</strong>.
+                            </p>
+                        </div>
+                        <div class="animate-on-scroll flex flex-col sm:flex-row justify-center gap-6" style="animation-delay: 0.4s;">
+                            <button id="explore-solutions-btn" class="btn-primary px-10 py-4 rounded-full font-semibold text-lg text-white nav-tab animate-pulse-glow" data-page="home" data-scroll="#solutions">
+                                🚀 Explore Solutions
+                            </button>
+                            <button id="schedule-demo-btn" class="border-2 border-blue-400 text-blue-400 px-10 py-4 rounded-full font-semibold text-lg hover:bg-blue-400/10 transition-all duration-200 hover:scale-105">
+                                📅 Schedule Demo
+                            </button>
+                        </div>
+                        
+                        <!-- Stats Section -->
+                        <div class="animate-on-scroll mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto" style="animation-delay: 0.6s;">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-blue-400 mb-2">99.9%</div>
+                                <div class="text-gray-400">Uptime SLA</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-green-400 mb-2">&lt;1hr</div>
+                                <div class="text-gray-400">Time to Value</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-purple-400 mb-2">47%</div>
+                                <div class="text-gray-400">Cost Reduction</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Solution Cards -->
+            <section id="solutions" class="py-20 bg-slate-900/50 relative">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-16 animate-on-scroll">
+                        <h2 class="text-3xl md:text-5xl font-bold mb-6 text-balance">Our <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Solutions</span></h2>
+                        <p class="text-xl text-gray-400 max-w-3xl mx-auto text-balance">Comprehensive technology solutions designed to accelerate your digital transformation</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- AI-Powered Observability -->
+                        <div class="glass-card rounded-2xl p-8 hover-lift animate-on-scroll" style="animation-delay: 0.1s;">
+                            <div class="h-16 w-16 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 relative">
+                                <div class="absolute inset-0 bg-blue-500/20 rounded-xl animate-pulse"></div>
+                                <svg class="w-10 h-10 text-blue-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">AI-Powered Observability</h3>
+                            <p class="text-gray-400 mb-6 leading-relaxed">Complete visibility into your systems with intelligent monitoring, alerting, and analytics.</p>
+                            <button class="text-blue-400 font-semibold hover:text-blue-300 transition-colors nav-tab flex items-center group" data-page="tech-stack">
+                                Learn More 
+                                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Cloud Infrastructure -->
+                        <div class="glass-card rounded-2xl p-8 hover-lift animate-on-scroll" style="animation-delay: 0.2s;">
+                            <div class="h-16 w-16 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 relative">
+                                <div class="absolute inset-0 bg-cyan-500/20 rounded-xl animate-pulse"></div>
+                                <svg class="w-10 h-10 text-cyan-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">Cloud Infrastructure</h3>
+                            <p class="text-gray-400 mb-6 leading-relaxed">Scalable SaaS, PaaS, and IaaS solutions optimized for performance and cost efficiency.</p>
+                            <button class="text-cyan-400 font-semibold hover:text-cyan-300 transition-colors nav-tab flex items-center group" data-page="architecture">
+                                Learn More 
+                                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Smart IoT Innovation -->
+                        <div class="glass-card rounded-2xl p-8 hover-lift animate-on-scroll" style="animation-delay: 0.3s;">
+                            <div class="h-16 w-16 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 relative">
+                                <div class="absolute inset-0 bg-purple-500/20 rounded-xl animate-pulse"></div>
+                                <svg class="w-10 h-10 text-purple-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">Smart IoT Innovation</h3>
+                            <p class="text-gray-400 mb-6 leading-relaxed">Connected device solutions with real-time analytics and intelligent automation.</p>
+                            <button class="text-purple-400 font-semibold hover:text-purple-300 transition-colors nav-tab flex items-center group" data-page="portal">
+                                Learn More 
+                                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- RPA Solutions -->
+                        <div class="glass-card rounded-2xl p-8 hover-lift animate-on-scroll" style="animation-delay: 0.4s;">
+                            <div class="h-16 w-16 bg-green-500/20 rounded-xl flex items-center justify-center mb-6 relative">
+                                <div class="absolute inset-0 bg-green-500/20 rounded-xl animate-pulse"></div>
+                                <svg class="w-10 h-10 text-green-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">RPA Solutions</h3>
+                            <p class="text-gray-400 mb-6 leading-relaxed">Intelligent process automation to streamline operations and reduce manual work.</p>
+                            <button class="text-green-400 font-semibold hover:text-green-300 transition-colors nav-tab flex items-center group" data-page="portal">
+                                Learn More 
+                                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product Portal Teaser -->
+            <section class="py-20 bg-slate-800/50 relative">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-16 animate-on-scroll">
+                        <h2 class="text-3xl md:text-5xl font-bold mb-6 text-balance">Product <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Portal</span></h2>
+                        <p class="text-xl text-gray-400 max-w-3xl mx-auto text-balance">Integrated suite of products designed to work seamlessly together</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        <!-- InfiGuard -->
+                        <div class="glass-card rounded-2xl p-8 text-center hover-lift animate-on-scroll" style="animation-delay: 0.1s;">
+                            <div class="h-20 w-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                                <div class="absolute inset-0 bg-red-500/10 rounded-full animate-ping"></div>
+                                <svg class="w-12 h-12 text-red-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4">InfiGuard</h3>
+                            <p class="text-gray-400 leading-relaxed">Advanced security & threat detection with AI-powered analytics</p>
+                        </div>
+                        
+                        <!-- InfiPulse -->
+                        <div class="glass-card rounded-2xl p-8 text-center hover-lift animate-on-scroll" style="animation-delay: 0.2s;">
+                            <div class="h-20 w-20 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                                <div class="absolute inset-0 bg-blue-500/10 rounded-full animate-ping"></div>
+                                <svg class="w-12 h-12 text-blue-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4">InfiPulse</h3>
+                            <p class="text-gray-400 leading-relaxed">Real-time analytics & performance monitoring for optimal operations</p>
+                        </div>
+                        
+                        <!-- InfiAutomation -->
+                        <div class="glass-card rounded-2xl p-8 text-center hover-lift animate-on-scroll" style="animation-delay: 0.3s;">
+                            <div class="h-20 w-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                                <div class="absolute inset-0 bg-green-500/10 rounded-full animate-ping"></div>
+                                <svg class="w-12 h-12 text-green-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4">InfiAutomation</h3>
+                            <p class="text-gray-400 leading-relaxed">Intelligent workflow automation & RPA for streamlined processes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-12 animate-on-scroll" style="animation-delay: 0.4s;">
+                        <button class="btn-primary px-8 py-4 rounded-full font-semibold text-lg text-white nav-tab hover:shadow-xl transition-all duration-300" data-page="portal">
+                            🚀 Explore Product Portal
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why Infivista -->
+            <section class="py-20 bg-slate-900/50 relative">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-16 animate-on-scroll">
+                        <h2 class="text-3xl md:text-5xl font-bold mb-6 text-balance">Why <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Infivista</span></h2>
+                        <p class="text-xl text-gray-400 max-w-3xl mx-auto text-balance">Built for business outcomes, not just technical metrics</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <!-- Faster Time-to-Value -->
+                        <div class="text-center animate-on-scroll" style="animation-delay: 0.1s;">
+                            <div class="h-24 w-24 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                                <div class="absolute inset-0 bg-green-500/10 rounded-full animate-ping"></div>
+                                <span class="text-3xl font-bold text-green-400 relative z-10">&lt; 1hr</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">Faster Time-to-Value</h3>
+                            <p class="text-gray-400 leading-relaxed">Get business outcomes in under 1 hour, not weeks of setup and configuration</p>
+                        </div>
+                        
+                        <!-- Lower TCO -->
+                        <div class="text-center animate-on-scroll" style="animation-delay: 0.2s;">
+                            <div class="h-24 w-24 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                                <div class="absolute inset-0 bg-blue-500/10 rounded-full animate-ping"></div>
+                                <span class="text-3xl font-bold text-blue-400 relative z-10">47%</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">Lower TCO</h3>
+                            <p class="text-gray-400 leading-relaxed">Reduce total cost of ownership with managed observability at scale</p>
+                        </div>
+                        
+                        <!-- Open Standards -->
+                        <div class="text-center animate-on-scroll" style="animation-delay: 0.3s;">
+                            <div class="h-24 w-24 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                                <div class="absolute inset-0 bg-purple-500/10 rounded-full animate-ping"></div>
+                                <svg class="w-12 h-12 text-purple-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">Open Standards</h3>
+                            <p class="text-gray-400 leading-relaxed">Built on OpenTelemetry - no vendor lock-in, maximum flexibility</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Simplified versions of other pages for demo purposes -->
+        <div id="tech-stack" class="page-section hidden">
+            <section class="min-h-screen flex items-center justify-center bg-slate-900">
+                <div class="text-center animate-fade-in">
+                    <h1 class="text-6xl font-bold mb-8">Technology <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Stack</span></h1>
+                    <p class="text-xl text-gray-400 mb-8">Advanced observability built on proven open-source technologies</p>
+                    <button class="btn-primary px-8 py-4 rounded-full font-semibold text-lg text-white">
+                        Explore Our Stack
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div id="tiers" class="page-section hidden">
+            <section class="min-h-screen flex items-center justify-center bg-slate-900">
+                <div class="text-center animate-fade-in">
+                    <h1 class="text-6xl font-bold mb-8">Pricing <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Plans</span></h1>
+                    <p class="text-xl text-gray-400 mb-8">Choose the perfect plan for your organization</p>
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <button class="btn-primary px-8 py-4 rounded-full font-semibold text-lg text-white">
+                            View Pricing
+                        </button>
+                        <button class="border-2 border-blue-400 text-blue-400 px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-400/10 transition-colors">
+                            Start Free Trial
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="architecture" class="page-section hidden">
+            <section class="min-h-screen flex items-center justify-center bg-slate-900">
+                <div class="text-center animate-fade-in">
+                    <h1 class="text-6xl font-bold mb-8">Enterprise <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Solutions</span></h1>
+                    <p class="text-xl text-gray-400 mb-8">Scalable architecture for enterprise needs</p>
+                    <button class="btn-primary px-8 py-4 rounded-full font-semibold text-lg text-white">
+                        Learn More
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div id="portal" class="page-section hidden">
+            <section class="min-h-screen flex items-center justify-center bg-slate-900">
+                <div class="text-center animate-fade-in">
+                    <h1 class="text-6xl font-bold mb-8">Product <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Portal</span></h1>
+                    <p class="text-xl text-gray-400 mb-8">Integrated suite of intelligent products</p>
+                    <button class="btn-primary px-8 py-4 rounded-full font-semibold text-lg text-white">
+                        Explore Products
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div id="docs" class="page-section hidden">
+            <section class="min-h-screen flex items-center justify-center bg-slate-900">
+                <div class="text-center animate-fade-in">
+                    <h1 class="text-6xl font-bold mb-8">Documentation & <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Resources</span></h1>
+                    <p class="text-xl text-gray-400 mb-8">Everything you need to get started</p>
+                    <button class="btn-primary px-8 py-4 rounded-full font-semibold text-lg text-white">
+                        Browse Docs
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div id="partners" class="page-section hidden">
+            <section class="min-h-screen flex items-center justify-center bg-slate-900">
+                <div class="text-center animate-fade-in">
+                    <h1 class="text-6xl font-bold mb-8">Partner <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Program</span></h1>
+                    <p class="text-xl text-gray-400 mb-8">Join our ecosystem and grow together</p>
+                    <button class="btn-primary px-8 py-4 rounded-full font-semibold text-lg text-white">
+                        Become a Partner
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div id="support" class="page-section hidden">
+            <section class="min-h-screen flex items-center justify-center bg-slate-900">
+                <div class="text-center animate-fade-in">
+                    <h1 class="text-6xl font-bold mb-8">Customer <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Support</span></h1>
+                    <p class="text-xl text-gray-400 mb-8">Get help when you need it</p>
+                    <button class="btn-primary px-8 py-4 rounded-full font-semibold text-lg text-white">
+                        Contact Support
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Vimeo Player Modal -->
+    <div id="vimeo-player-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-sm">
+        <div class="w-full max-w-6xl mx-4 relative">
+            <div class="relative pb-[56.25%] bg-black rounded-xl overflow-hidden shadow-2xl">
+                <iframe class="absolute inset-0 w-full h-full" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Product Demo"></iframe>
+            </div>
+            <div class="mt-6 text-center">
+                <button id="close-vimeo-player" class="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-full font-semibold transition-all duration-200 hover:scale-105">
+                    ✕ Close Player
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced JavaScript -->
+    <script>
+        // Enhanced Mobile Menu
+        class MobileMenu {
+            constructor() {
+                this.menuBtn = document.getElementById('mobile-menu-btn');
+                this.menu = document.getElementById('mobile-menu');
+                this.closeBtn = document.getElementById('close-mobile-menu');
+                this.overlay = document.getElementById('mobile-overlay');
+                this.init();
+            }
+
+            init() {
+                this.menuBtn?.addEventListener('click', () => this.open());
+                this.closeBtn?.addEventListener('click', () => this.close());
+                this.overlay?.addEventListener('click', () => this.close());
+                
+                // Close on escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.isOpen()) {
+                        this.close();
+                    }
+                });
+            }
+
+            open() {
+                this.menu?.classList.remove('translate-x-full');
+                this.overlay?.classList.remove('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'hidden';
+            }
+
+            close() {
+                this.menu?.classList.add('translate-x-full');
+                this.overlay?.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = '';
+            }
+
+            isOpen() {
+                return !this.menu?.classList.contains('translate-x-full');
+            }
+        }
+
+        // Enhanced Navigation
+        class Navigation {
+            constructor() {
+                this.pages = document.querySelectorAll('.page-section');
+                this.navTabs = document.querySelectorAll('.nav-tab');
+                this.init();
+            }
+
+            init() {
+                this.navTabs.forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const pageId = tab.getAttribute('data-page');
+                        if (pageId) {
+                            this.showPage(pageId);
+                            this.updateActiveTab(pageId);
+                            // Close mobile menu if open
+                            document.getElementById('mobile-menu')?.classList.add('translate-x-full');
+                            document.getElementById('mobile-overlay')?.classList.add('opacity-0', 'pointer-events-none');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                });
+            }
+
+            showPage(pageId) {
+                // Hide all pages
+                this.pages.forEach(page => {
+                    page.classList.remove('active');
+                    page.classList.add('hidden');
+                });
+                
+                // Show selected page
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                    targetPage.classList.remove('hidden');
+                    this.animatePageElements(targetPage);
+                }
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            updateActiveTab(pageId) {
+                this.navTabs.forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.getAttribute('data-page') === pageId) {
+                        tab.classList.add('active');
+                    }
+                });
+            }
+
+            animatePageElements(page) {
+                const elements = page.querySelectorAll('.animate-on-scroll');
+                elements.forEach((el, index) => {
+                    el.style.animationDelay = `${index * 0.1}s`;
+                    el.classList.add('visible');
+                });
+            }
+        }
+
+        // Scroll Animation Observer
+        class ScrollAnimations {
+            constructor() {
+                this.observer = new IntersectionObserver(
+                    (entries) => this.handleIntersection(entries),
+                    { threshold: 0.1, rootMargin: '50px' }
+                );
+                this.init();
+            }
+
+            init() {
+                const elements = document.querySelectorAll('.animate-on-scroll');
+                elements.forEach(el => this.observer.observe(el));
+            }
+
+            handleIntersection(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }
+        }
+
+        // Video Player
+        class VideoPlayer {
+            constructor() {
+                this.modal = document.getElementById('vimeo-player-modal');
+                this.iframe = this.modal?.querySelector('iframe');
+                this.closeBtn = document.getElementById('close-vimeo-player');
+                this.init();
+            }
+
+            init() {
+                // Watch demo buttons
+                document.getElementById('watch-demo-btn')?.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.open();
+                });
+
+                document.getElementById('banner-watch-demo')?.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.open();
+                });
+
+                // Close handlers
+                this.closeBtn?.addEventListener('click', () => this.close());
+                this.modal?.addEventListener('click', (e) => {
+                    if (e.target === this.modal) this.close();
+                });
+
+                // ESC key close
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.isOpen()) {
+                        this.close();
+                    }
+                });
+            }
+
+            open() {
+                if (this.iframe) {
+                    this.iframe.src = 'https://player.vimeo.com/video/1124575910?autoplay=1&muted=0';
+                }
+                this.modal?.classList.remove('hidden');
+                this.modal?.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            }
+
+            close() {
+                if (this.iframe) {
+                    this.iframe.src = '';
+                }
+                this.modal?.classList.add('hidden');
+                this.modal?.classList.remove('flex');
+                document.body.style.overflow = '';
+            }
+
+            isOpen() {
+                return this.modal?.classList.contains('flex');
+            }
+        }
+
+        // Navbar scroll effect
+        class NavbarScroll {
+            constructor() {
+                this.navbar = document.getElementById('main-nav');
+                this.init();
+            }
+
+            init() {
+                let lastScroll = 0;
+                window.addEventListener('scroll', () => {
+                    const currentScroll = window.pageYOffset;
+                    
+                    if (currentScroll > 100) {
+                        this.navbar?.classList.add('bg-slate-900/95', 'shadow-2xl');
+                    } else {
+                        this.navbar?.classList.remove('bg-slate-900/95', 'shadow-2xl');
+                    }
+
+                    lastScroll = currentScroll;
+                });
+            }
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new MobileMenu();
+            new Navigation();
+            new ScrollAnimations();
+            new VideoPlayer();
+            new NavbarScroll();
+            
+            // Add loading state management
+            window.addEventListener('load', () => {
+                document.body.classList.add('loaded');
+            });
+
+            // Performance optimization: lazy load images
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.classList.remove('lazy');
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                });
+
+                document.querySelectorAll('img[data-src]').forEach(img => {
+                    imageObserver.observe(img);
+                });
+            }
+        });
+
+        // Error handling for video player
+        window.addEventListener('error', (e) => {
+            console.error('Error occurred:', e.error);
+        });
+
+        // Analytics and tracking (placeholder)
+        function trackEvent(eventName, properties = {}) {
+            console.log('Event tracked:', eventName, properties);
+            // Integrate with your analytics service here
+        }
+
+        // Enhanced performance monitoring
+        if ('PerformanceObserver' in window) {
+            const observer = new PerformanceObserver((list) => {
+                list.getEntries().forEach((entry) => {
+                    if (entry.entryType === 'largest-contentful-paint') {
+                        console.log('LCP:', entry.startTime);
+                    }
+                });
+            });
+            observer.observe({entryTypes: ['largest-contentful-paint']});
+        }
+    </script>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Infivista",
+        "description": "AI-powered observability, cloud infrastructure, IoT innovation, and automation solutions built for business outcomes.",
+        "url": "https://infivista.com",
+        "logo": "https://infivista.com/logo.png",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-555-INFIVISTA",
+            "contactType": "customer service"
+        },
+        "sameAs": [
+            "https://twitter.com/infivista",
+            "https://linkedin.com/company/infivista"
+        ]
+    }
+    </script>
+</body>
+</html>

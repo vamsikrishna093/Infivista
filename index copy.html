@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infivista - Intelligent Technology Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0a0e27 0%, #1e1b4b 50%, #312e81 100%);
+            --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            --card-gradient: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
+            --glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            --neon-blue: #00d4ff;
+            --neon-purple: #a855f7;
+            --neon-cyan: #06b6d4;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background: var(--primary-gradient);
+        }
+        
+        .orbitron {
+            /* use condensed sans for brand/heading variant */
+            font-family: 'Roboto Condensed', 'Inter', sans-serif;
+        }
+
+        /* Headings: use Inter at lighter weight for a modern, open look */
+        h1, h2, h3, h4, h5 {
+            font-family: 'Inter', 'Roboto Condensed', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+            font-weight: 400;
+            color: #f8fafc;
+            letter-spacing: 0.01em;
+            line-height: 1.2;
+        }
+
+        /* Body copy keep Inter (sans) for readability */
+        p, li, span, a, button {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+        
+        .bg-deep-gradient {
+            background: var(--primary-gradient);
+        }
+        
+        .bg-accent-gradient {
+            background: var(--accent-gradient);
+        }
+        
+        .bg-card-gradient {
+            background: var(--card-gradient);
+        }
+        
+        .bg-glass {
+            background: var(--glass-gradient);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .text-gradient {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* reduce heavy glow effects for a cleaner, professional appearance */
+        .glow {
+            box-shadow: 0 6px 18px rgba(59, 130, 246, 0.12);
+        }
+
+        .glow-cyan {
+            box-shadow: 0 6px 18px rgba(6, 182, 212, 0.10);
+        }
+
+        .glow-purple {
+            box-shadow: 0 6px 18px rgba(139, 92, 246, 0.10);
+        }
+        
+        .card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-tab {
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .nav-tab.active {
+            background: var(--accent-gradient);
+            color: white;
+        }
+        
+        .nav-tab:hover:not(.active) {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+        }
+        
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(59, 130, 246, 0.8); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 2rem;
+            width: 2px;
+            height: calc(100% - 1.5rem);
+            background: linear-gradient(to bottom, #3b82f6, transparent);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .tier-card {
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        
+        .tier-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .tier-card.popular {
+            border: 2px solid var(--neon-blue);
+            position: relative;
+        }
+        
+        .tier-card.popular::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-gradient);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 25px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .solution-card {
+            background: var(--glass-gradient);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(59, 130, 246, 0.6);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-800/50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="orbitron text-2xl font-bold">
+                    <span class="text-white">Infi</span><span class="text-gradient">vista</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex space-x-6">
+                    <button class="nav-tab active px-4 py-2 rounded-lg font-medium" data-page="home">Home</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium" data-page="tech-stack">Technology Stack</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium" data-page="tiers">Tiers & Tooling</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium" data-page="architecture">Implementation</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium" data-page="portal">Product Portal</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium" data-page="docs">Documentation</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium" data-page="partners">Partners</button>
+                    <button class="nav-tab px-4 py-2 rounded-lg font-medium" data-page="support">Support</button>
+                </div>
+                
+                <!-- Desktop CTAs -->
+                <div class="hidden lg:flex space-x-3">
+                    <button class="border border-blue-400 text-blue-400 px-6 py-2 rounded-full font-medium hover:bg-blue-400/10 transition">
+                        Start Free
+                    </button>
+                    <button id="watch-demo-btn" class="bg-accent-gradient px-6 py-2 rounded-full font-medium hover:opacity-90 transition glow">
+                        Watch Demo
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-white" id="mobile-menu-btn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed top-0 right-0 h-full w-80 bg-slate-900/98 backdrop-blur-md border-l border-slate-800 lg:hidden" id="mobile-menu">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <div class="orbitron text-xl font-bold">
+                        <span class="text-white">Infi</span><span class="text-gradient">vista</span>
+                    </div>
+                    <button class="text-white" id="close-mobile-menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="space-y-4 mb-8">
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium" data-page="home">Home</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium" data-page="tech-stack">Technology Stack</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium" data-page="tiers">Tiers & Tooling</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium" data-page="architecture">Implementation</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium" data-page="portal">Product Portal</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium" data-page="docs">Documentation</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium" data-page="partners">Partners</button>
+                    <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium" data-page="support">Support</button>
+                </div>
+                
+                    <div class="space-y-3">
+                    <a href="#" class="w-full block text-center border border-blue-400 text-blue-400 px-6 py-3 rounded-full font-medium hover:bg-blue-400/10 transition" id="start-free-cta">
+                        Start Free
+                    </a>
+                    <!-- Book Demo removed (use Watch Demo in header) -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Persistent demo banner (visible site-wide) -->
+    <div class="w-full bg-gradient-to-r from-cyan-600 to-indigo-600 text-white py-3 text-center">
+        <div class="container mx-auto px-4">
+            <span class="font-semibold mr-4">Want to see the product in action?</span>
+            <button id="banner-watch-demo" class="bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded-md font-semibold">Watch Product Demo</button>
+        </div>
+    </div>
+
+    <!-- Page 1: Home -->
+    <div id="home" class="page-section active">
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center overflow-hidden">
+            <div class="hero-particles">
+                <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+                <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+                <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+                <div class="particle" style="left: 40%; animation-delay: 3s;"></div>
+                <div class="particle" style="left: 50%; animation-delay: 4s;"></div>
+                <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+                <div class="particle" style="left: 70%; animation-delay: 1.5s;"></div>
+                <div class="particle" style="left: 80%; animation-delay: 2.5s;"></div>
+                <div class="particle" style="left: 90%; animation-delay: 3.5s;"></div>
+            </div>
+            
+            <div class="container mx-auto px-4 py-20 relative z-10">
+                <div class="max-w-5xl mx-auto text-center">
+                    <h1 class="orbitron text-4xl md:text-7xl font-bold mb-8 leading-tight">
+                        Intelligent <span class="text-gradient">Technology Solutions</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+                        AI-powered observability, cloud infrastructure, IoT innovation, and automation — built for business outcomes.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <button id="explore-solutions-btn" class="bg-accent-gradient px-10 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition pulse-glow nav-tab" data-page="home" data-scroll="#solutions">
+                            Explore Solutions
+                        </button>
+                        <button id="schedule-demo-btn" class="border-2 border-blue-400 text-blue-400 px-10 py-4 rounded-full font-semibold text-lg hover:bg-blue-400/10 transition">
+                            Schedule Demo
+                        </button>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Solution Cards -->
+        <section id="solutions" class="py-20 bg-slate-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6">Our <span class="text-gradient">Solutions</span></h2>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">Comprehensive technology solutions designed to accelerate your digital transformation</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- AI-Powered Observability -->
+                    <div class="solution-card rounded-2xl p-8">
+                        <div class="h-16 w-16 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 glow">
+                            <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-4">AI-Powered Observability</h3>
+                        <p class="text-gray-400 mb-6">Complete visibility into your systems with intelligent monitoring, alerting, and analytics.</p>
+                        <button class="text-blue-400 font-semibold hover:text-blue-300 transition nav-tab" data-page="tech-stack">
+                            Learn More →
+                        </button>
+                    </div>
+                    
+                    <!-- Cloud Infrastructure -->
+                    <div class="solution-card rounded-2xl p-8">
+                        <div class="h-16 w-16 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 glow-cyan">
+                            <svg class="w-10 h-10 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-4">Cloud Infrastructure</h3>
+                        <p class="text-gray-400 mb-6">Scalable SaaS, PaaS, and IaaS solutions optimized for performance and cost efficiency.</p>
+                        <button class="text-cyan-400 font-semibold hover:text-cyan-300 transition nav-tab" data-page="architecture">
+                            Learn More →
+                        </button>
+                    </div>
+                    
+                    <!-- Smart IoT Innovation -->
+                    <div class="solution-card rounded-2xl p-8">
+                        <div class="h-16 w-16 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 glow-purple">
+                            <svg class="w-10 h-10 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-4">Smart IoT Innovation</h3>
+                        <p class="text-gray-400 mb-6">Connected device solutions with real-time analytics and intelligent automation.</p>
+                        <button class="text-purple-400 font-semibold hover:text-purple-300 transition nav-tab" data-page="portal">
+                            Learn More →
+                        </button>
+                    </div>
+                    
+                    <!-- RPA Solutions -->
+                    <div class="solution-card rounded-2xl p-8">
+                        <div class="h-16 w-16 bg-green-500/20 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-4">RPA Solutions</h3>
+                        <p class="text-gray-400 mb-6">Intelligent process automation to streamline operations and reduce manual work.</p>
+                        <button class="text-green-400 font-semibold hover:text-green-300 transition nav-tab" data-page="portal">
+                            Learn More →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Portal Teaser -->
+        <section class="py-20 bg-slate-800/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6">Product <span class="text-gradient">Portal</span></h2>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">Integrated suite of products designed to work seamlessly together</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <!-- InfiGuard -->
+                    <div class="bg-glass rounded-2xl p-8 text-center">
+                        <div class="h-20 w-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-2xl font-bold mb-4">InfiGuard</h3>
+                        <p class="text-gray-400">Advanced security & threat detection with AI-powered analytics</p>
+                    </div>
+                    
+                    <!-- InfiPulse -->
+                    <div class="bg-glass rounded-2xl p-8 text-center">
+                        <div class="h-20 w-20 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-2xl font-bold mb-4">InfiPulse</h3>
+                        <p class="text-gray-400">Real-time analytics & performance monitoring for optimal operations</p>
+                    </div>
+                    
+                    <!-- InfiAutomation -->
+                    <div class="bg-glass rounded-2xl p-8 text-center">
+                        <div class="h-20 w-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-2xl font-bold mb-4">InfiAutomation</h3>
+                        <p class="text-gray-400">Intelligent workflow automation & RPA for streamlined processes</p>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <button class="bg-accent-gradient px-8 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition glow nav-tab" data-page="portal">
+                        Explore Product Portal
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Infivista -->
+        <section class="py-20 bg-slate-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6">Why <span class="text-gradient">Infivista</span></h2>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">Built for business outcomes, not just technical metrics</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Faster Time-to-Value -->
+                    <div class="text-center">
+                        <div class="h-24 w-24 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-3xl font-bold text-green-400">< 1hr</span>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-4">Faster Time-to-Value</h3>
+                        <p class="text-gray-400">Get business outcomes in under 1 hour, not weeks of setup and configuration</p>
+                    </div>
+                    
+                    <!-- Lower TCO -->
+                    <div class="text-center">
+                        <div class="h-24 w-24 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-3xl font-bold text-blue-400">47%</span>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-4">Lower TCO</h3>
+                        <p class="text-gray-400">Reduce total cost of ownership with managed observability at scale</p>
+                    </div>
+                    
+                    <!-- Open Standards -->
+                    <div class="text-center">
+                        <div class="h-24 w-24 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-12 h-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-4">Open Standards</h3>
+                        <p class="text-gray-400">Built on OpenTelemetry - no vendor lock-in, maximum flexibility</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Page 2: Technology Stack -->
+    <div id="tech-stack" class="page-section">
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center">
+            <div class="container mx-auto px-4 py-20">
+                <div class="max-w-5xl mx-auto text-center">
+                    <h1 class="orbitron text-4xl md:text-7xl font-bold mb-8">
+                        The Infivista <span class="text-gradient">Observability Stack</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-12">
+                        Start getting business outcomes in under 1 hour.
+                    </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="#" id="start-free-hero" class="bg-accent-gradient px-10 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition pulse-glow">Start Free</a>
+                        <button class="border-2 border-blue-400 text-blue-400 px-10 py-4 rounded-full font-semibold text-lg hover:bg-blue-400/10 transition nav-tab" data-page="tiers">See Tiers</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pillars Section -->
+        <section class="py-20 bg-slate-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6">Observability <span class="text-gradient">Pillars</span></h2>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">Complete observability stack built on proven open-source technologies</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Metrics -->
+                    <div class="card bg-glass rounded-2xl p-8">
+                        <div class="h-16 w-16 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 glow">
+                            <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-3">Metrics</h3>
+                        <p class="text-gray-400 mb-4">Prometheus/VictoriaMetrics/InfluxDB OSS</p>
+                        <p class="text-sm text-gray-300">High-cardinality metrics with unlimited retention and blazing-fast queries for real-time insights.</p>
+                    </div>
+                    
+                    <!-- Logs -->
+                    <div class="card bg-glass rounded-2xl p-8">
+                        <div class="h-16 w-16 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 glow-cyan">
+                            <svg class="w-10 h-10 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-3">Logs</h3>
+                        <p class="text-gray-400 mb-4">Loki/OpenSearch</p>
+                        <p class="text-sm text-gray-300">Structured logging with intelligent indexing and cost-optimized storage for comprehensive analysis.</p>
+                    </div>
+                    
+                    <!-- Traces -->
+                    <div class="card bg-glass rounded-2xl p-8">
+                        <div class="h-16 w-16 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 glow-purple">
+                            <svg class="w-10 h-10 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-3">Traces</h3>
+                        <p class="text-gray-400 mb-4">Jaeger/Tempo</p>
+                        <p class="text-sm text-gray-300">Distributed tracing for complete request flow visibility and performance optimization insights.</p>
+                    </div>
+                    
+                    <!-- Dashboards & Alerts -->
+                    <div class="card bg-glass rounded-2xl p-8">
+                        <div class="h-16 w-16 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-10 h-10 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-3">Dashboards & Alerts</h3>
+                        <p class="text-gray-400 mb-4">Grafana</p>
+                        <p class="text-sm text-gray-300">Rich visualizations and intelligent alerting with ML-powered anomaly detection and automation.</p>
+                    </div>
+                    
+                    <!-- Profiling -->
+                    <div class="card bg-glass rounded-2xl p-8">
+                        <div class="h-16 w-16 bg-green-500/20 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-3">Profiling</h3>
+                        <p class="text-gray-400 mb-4">Parca</p>
+                        <p class="text-sm text-gray-300">Continuous profiling for deep performance optimization and resource efficiency improvements.</p>
+                    </div>
+                    
+                    <!-- Ingest/Standards -->
+                    <div class="card bg-glass rounded-2xl p-8">
+                        <div class="h-16 w-16 bg-orange-500/20 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="orbitron text-xl font-bold mb-3">Ingest/Standards</h3>
+                        <p class="text-gray-400 mb-4">OpenTelemetry</p>
+                        <p class="text-sm text-gray-300">Vendor-neutral instrumentation with zero lock-in and universal compatibility across platforms.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Managed Beats Self-Host -->
+        <section class="py-20 bg-slate-800/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6">Why Managed <span class="text-gradient">Beats Self-Host</span></h2>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">Dramatic cost savings and operational efficiency with managed observability at scale</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Cost Chart -->
+                    <div class="bg-glass rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-8 text-center">Monthly Cost Per Customer</h3>
+                        <div class="relative h-80">
+                            <canvas id="costChart" width="400" height="300"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-400 text-center mt-6">*Numbers are indicative based on typical enterprise workloads</p>
+                    </div>
+                    
+                    <!-- Benefits -->
+                    <div class="space-y-8">
+                        <div class="flex items-start space-x-6">
+                            <div class="h-14 w-14 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-3">Lower Infrastructure Costs</h4>
+                                <p class="text-gray-400">Shared resources and economies of scale reduce per-tenant costs by 5-10×, freeing budget for innovation.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-6">
+                            <div class="h-14 w-14 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-3">Single Console, No Patching</h4>
+                                <p class="text-gray-400">Unified management interface with automatic updates and maintenance - your engineers focus on business outcomes.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-6">
+                            <div class="h-14 w-14 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-3">Flexible Retention Options</h4>
+                                <p class="text-gray-400">30–365d retention policies to match compliance and business needs without infrastructure overhead.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-6">
+                            <div class="h-14 w-14 bg-cyan-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-8 h-8 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-3">RBAC/SSO/SAML Ready</h4>
+                                <p class="text-gray-400">Enterprise security and compliance features built-in, reducing time to production.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 60-Minute Outcomes Timeline -->
+        <section class="py-20 bg-slate-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6"><span class="text-gradient">60‑Minute</span> Outcomes</h2>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">From zero to full observability in under an hour - less time on infrastructure, more on business outcomes</p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="space-y-8">
+                        <div class="timeline-item">
+                            <div class="bg-glass rounded-2xl p-8">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-2xl font-bold">Agent Install</h3>
+                                    <span class="text-blue-400 font-mono text-xl">0–10m</span>
+                                </div>
+                                <p class="text-gray-400 text-lg">Deploy OpenTelemetry agents across your infrastructure with our one-line installer and auto-discovery.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="bg-glass rounded-2xl p-8">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-2xl font-bold">Auto-Dashboards</h3>
+                                    <span class="text-cyan-400 font-mono text-xl">10–30m</span>
+                                </div>
+                                <p class="text-gray-400 text-lg">Golden signals and SLO dashboards automatically generated for latency, traffic, errors, and saturation.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="bg-glass rounded-2xl p-8">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-2xl font-bold">Alerts + Baselines</h3>
+                                    <span class="text-purple-400 font-mono text-xl">30–50m</span>
+                                </div>
+                                <p class="text-gray-400 text-lg">Intelligent alerting rules with ML-powered anomaly detection and baseline establishment for your workloads.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="bg-glass rounded-2xl p-8">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-2xl font-bold">KPI View Goes Live</h3>
+                                    <span class="text-green-400 font-mono text-xl">50–60m</span>
+                                </div>
+                                <p class="text-gray-400 text-lg">Executive dashboards linking technical metrics to business outcomes and KPIs for immediate value.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Value Blips -->
+        <section class="py-20 bg-slate-800/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6">Customer-ready <span class="text-gradient">Value</span></h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="text-center">
+                        <div class="h-24 w-24 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 glow">
+                            <span class="text-2xl font-bold text-green-400">35-60%</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Reduce MTTR</h3>
+                        <p class="text-gray-400 text-lg">Faster incident resolution with correlated observability data and intelligent root cause analysis</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="h-24 w-24 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6 glow">
+                            <span class="text-2xl font-bold text-blue-400">40%</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Cut Log Costs</h3>
+                        <p class="text-gray-400 text-lg">Intelligent log sampling and compression reduce storage costs while maintaining visibility</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="h-24 w-24 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6 glow-purple">
+                            <span class="text-xl font-bold text-purple-400">Zero</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Agent Lock-in</h3>
+                        <p class="text-gray-400 text-lg">OpenTelemetry standard ensures vendor independence and maximum flexibility</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Page 3: Tiers & Tooling -->
+    <div id="tiers" class="page-section">
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center">
+            <div class="container mx-auto px-4 py-20">
+                <div class="max-w-5xl mx-auto text-center">
+                    <h1 class="orbitron text-4xl md:text-7xl font-bold mb-8">
+                        Choose Your <span class="text-gradient">Tier</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-12">
+                        Open-source first. Scale when you need.
+                    </p>
+                    
+                    <!-- Tier Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                        <!-- Free Tier -->
+                        <div class="tier-card bg-glass rounded-2xl p-8 text-left">
+                            <div class="mb-8">
+                                <h3 class="orbitron text-3xl font-bold mb-3">Free</h3>
+                                <p class="text-gray-400 mb-6">Shared Infrastructure</p>
+                                <div class="text-4xl font-bold mb-3">₹0<span class="text-xl text-gray-400">/month</span></div>
+                                <p class="text-sm text-gray-400">Ideal for startups / POCs</p>
+                            </div>
+                            
+                            <ul class="space-y-4 mb-10">
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">Metrics+Logs+Traces (7–14d retention)</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">Grafana dashboards & basic alerts</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">OpenTelemetry ingest</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">Email support</span>
+                                </li>
+                            </ul>
+                            
+                            <button class="w-full bg-slate-700 hover:bg-slate-600 text-white py-4 rounded-xl transition text-lg font-semibold">
+                                Get Started
+                            </button>
+                        </div>
+                        
+                        <!-- Hybrid Tier -->
+                        <div class="tier-card popular bg-glass rounded-2xl p-8 text-left">
+                            <div class="mb-8">
+                                <h3 class="orbitron text-3xl font-bold mb-3">Hybrid</h3>
+                                <p class="text-gray-400 mb-6">Shared, Higher Quotas</p>
+                                <div class="text-4xl font-bold mb-3">₹12k<span class="text-xl text-gray-400">/month</span></div>
+                                <p class="text-sm text-gray-400">Perfect for growing teams</p>
+                            </div>
+                            
+                            <ul class="space-y-4 mb-10">
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">30–90d retention, advanced alerting</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">k6 synthetic checks</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">Slack/MS Teams alerts</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">Optional Grafana Cloud plug-ins</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">Priority support</span>
+                                </li>
+                            </ul>
+                            
+                            <button class="w-full bg-accent-gradient text-white py-4 rounded-xl transition glow text-lg font-semibold">
+                                Start Trial
+                            </button>
+                        </div>
+                        
+                        <!-- Enterprise Tier -->
+                        <div class="tier-card bg-glass rounded-2xl p-8 text-left">
+                            <div class="mb-8">
+                                <h3 class="orbitron text-3xl font-bold mb-3">Enterprise</h3>
+                                <p class="text-gray-400 mb-6">Business/Enterprise</p>
+                                <div class="text-4xl font-bold mb-3">Custom<span class="text-xl text-gray-400"> pricing</span></div>
+                                <p class="text-sm text-gray-400">For large organizations</p>
+                            </div>
+                            
+                            <ul class="space-y-4 mb-10">
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">1yr+ retention, HA</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">RBAC, SSO/SAML, audit logs</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">AI anomaly detection</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">Business KPIs (ITSI‑style views)</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span class="text-gray-300">Custom SLA & onboarding</span>
+                                </li>
+                            </ul>
+                            
+                            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-4 rounded-xl transition text-lg font-semibold">
+                                Contact Sales
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section class="py-20 bg-slate-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="orbitron text-3xl md:text-5xl font-bold mb-6">Self-host vs <span class="text-gradient">Infivista</span></h2>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">See why managed observability delivers better outcomes with less engineering overhead</p>
+                </div>
+                
+                <div class="max-w-6xl mx-auto">
+                    <div class="bg-glass rounded-2xl overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-slate-800">
+                                    <tr>
+                                        <th class="px-8 py-6 text-left text-lg font-bold text-gray-300">Factor</th>
+                                        <th class="px-8 py-6 text-center text-lg font-bold text-gray-300">Self-host</th>
+                                        <th class="px-8 py-6 text-center text-lg font-bold text-blue-400">Infivista</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-700">
+                                    <tr>
+                                        <td class="px-8 py-6 text-lg font-semibold text-white">Infrastructure Cost</td>
+                                        <td class="px-8 py-6 text-center text-lg text-red-400 font-semibold">₹34k–₹61k/month/tenant</td>
+                                        <td class="px-8 py-6 text-center text-lg text-green-400 font-semibold">₹18k/month (~20 tenants)</td>
+                                    </tr>
+                                    <tr class="bg-slate-800/30">
+                                        <td class="px-8 py-6 text-lg font-semibold text-white">Time-to-Value</td>
+                                        <td class="px-8 py-6 text-center text-lg text-red-400 font-semibold">2-6 weeks</td>
+                                        <td class="px-8 py-6 text-center text-lg text-green-400 font-semibold">< 1 hour</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-8 py-6 text-lg font-semibold text-white">Upgrades/Patching</td>
+                                        <td class="px-8 py-6 text-center text-lg text-red-400 font-semibold">Manual, risky</td>
+                                        <td class="px-8 py-6 text-center text-lg text-green-400 font-semibold">Automatic, zero-downtime</td>
+                                    </tr>
+                                    <tr class="bg-slate-800/30">
+                                        <td class="px-8 py-6 text-lg font-semibold text-white">Security/Compliance</td>
+                                        <td class="px-8 py-6 text-center text-lg text-red-400 font-semibold">DIY, complex</td>
+                                        <td class="px-8 py-6 text-center text-lg text-green-400 font-semibold">Built-in, enterprise-ready</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-8 py-6 text-lg font-semibold text-white">Observability Expertise</td>
+                                        <td class="px-8 py-6 text-center text-lg text-red-400 font-semibold">Hire specialists</td>
+                                        <td class="px-8 py-6 text-center text-lg text-green-400 font-semibold">Included with platform</td>
+                                    </tr>
+                                    <tr class="bg-slate-800/30">
+                                        <td class="px-8 py-6 text-lg font-semibold text-white">Total 12-mo TCO</td>
+                                        <td class="px-8 py-6 text-center text-lg text-red-400 font-bold">₹4.1L–₹7.3L</td>
+                                        <td class="px-8 py-6 text-center text-lg text-green-400 font-bold">₹2.2L</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="px-8 py-6 bg-slate-800 text-center">
+                            <p class="text-gray-400">*Figures are indicative and vary by data volume, retention, and HA requirements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Remaining pages would continue here... -->
+    <!-- For brevity, I'll add the remaining pages in a simplified format -->
+
+    <!-- Page 4: Implementation & Architecture -->
+    <div id="architecture" class="page-section">
+        <section class="relative min-h-screen flex items-center">
+            <div class="container mx-auto px-4 py-20">
+                <div class="max-w-5xl mx-auto text-center">
+                    <h1 class="orbitron text-4xl md:text-7xl font-bold mb-8">
+                        Implementation & <span class="text-gradient">Architecture</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-12">
+                        Enterprise-grade observability architecture built for scale and security
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl transition text-lg font-semibold nav-tab" data-page="security">Security Whitepaper</a>
+                        <a href="#" class="bg-purple-600 hover:bg-purple-700 text-white px-10 py-4 rounded-xl transition text-lg font-semibold nav-tab" data-page="dashboards">Sample Dashboards</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Security Whitepaper Page -->
+    <div id="security" class="page-section">
+        <section class="py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="orbitron text-3xl font-bold mb-4">Security & Compliance</h2>
+                <p class="text-gray-400 mb-4">Infivista is designed with defense-in-depth: encrypted transport (TLS), role-based access control, audit logging, and secure defaults. We recommend deploying behind your WAF and using private S3 buckets for sensitive artifacts.</p>
+                <h3 class="text-xl font-semibold mt-6">Key controls</h3>
+                <ul class="list-disc list-inside text-gray-300">
+                    <li>TLS for all endpoints (HTTPS)</li>
+                    <li>RBAC and single-sign-on (SAML / OIDC)</li>
+                    <li>Audit logging and immutable retention</li>
+                    <li>Encrypted storage at rest (cloud provider-managed keys or customer-managed)</li>
+                    <li>Network segmentation and egress filtering</li>
+                </ul>
+                <h3 class="text-xl font-semibold mt-6">Compliance</h3>
+                <p class="text-gray-400">Infivista helps meet common standards (ISO27001, SOC2) by providing logging, monitoring, and retention policies that support evidence collection and incident investigations.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Sample Dashboards Page -->
+    <div id="dashboards" class="page-section">
+        <section class="py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="orbitron text-3xl font-bold mb-4">Sample Dashboards</h2>
+                <p class="text-gray-400 mb-6">Explore quick-start dashboard templates you can import into Grafana or your dashboarding tool.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-glass p-6 rounded">
+                        <h3 class="font-semibold">Observability Overview</h3>
+                        <p class="text-sm text-gray-300">Key service health, latency percentiles, error rates, and throughput for a multi-service environment.</p>
+                        <a class="text-cyan-400 text-sm mt-3 inline-block" href="#">Open Observability Dashboard →</a>
+                    </div>
+                    <div class="bg-glass p-6 rounded">
+                        <h3 class="font-semibold">Prediction & Anomaly Dashboard</h3>
+                        <p class="text-sm text-gray-300">Time-series forecasting with model output, anomaly detection markers, and actionable alerts for predicted SLA breaches.</p>
+                        <a class="text-cyan-400 text-sm mt-3 inline-block" href="#">Open Prediction Dashboard →</a>
+                    </div>
+                    <div class="bg-glass p-6 rounded">
+                        <h3 class="font-semibold">Infrastructure Cost & Usage</h3>
+                        <p class="text-sm text-gray-300">Cost correlated with metrics and traces to identify expensive services and optimize spend.</p>
+                        <a class="text-cyan-400 text-sm mt-3 inline-block" href="#">Open Cost Dashboard →</a>
+                    </div>
+                    <div class="bg-glass p-6 rounded">
+                        <h3 class="font-semibold">Security & Audit</h3>
+                        <p class="text-sm text-gray-300">Alerting and drill-downs for suspicious activity, failed logins, and audit trails.</p>
+                        <a class="text-cyan-400 text-sm mt-3 inline-block" href="#">Open Security Dashboard →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Page 5: Product Portal -->
+    <div id="portal" class="page-section">
+        <section class="relative min-h-screen flex items-center">
+            <div class="container mx-auto px-4 py-20">
+                <div class="max-w-5xl mx-auto text-center">
+                    <h1 class="orbitron text-4xl md:text-7xl font-bold mb-8">
+                        Product <span class="text-gradient">Portal</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-12">
+                        Integrated suite of intelligent solutions designed to work seamlessly together
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                        <div class="bg-glass rounded-2xl p-8 text-center">
+                            <div class="h-20 w-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="orbitron text-2xl font-bold mb-4">InfiGuard</h3>
+                            <p class="text-gray-400">Advanced security & threat detection with AI-powered analytics</p>
+                        </div>
+                        <div class="bg-glass rounded-2xl p-8 text-center">
+                            <div class="h-20 w-20 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="orbitron text-2xl font-bold mb-4">InfiPulse</h3>
+                            <p class="text-gray-400">Real-time analytics & performance monitoring for optimal operations</p>
+                        </div>
+                        <div class="bg-glass rounded-2xl p-8 text-center">
+                            <div class="h-20 w-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="orbitron text-2xl font-bold mb-4">InfiAutomation</h3>
+                            <p class="text-gray-400">Intelligent workflow automation & RPA for streamlined processes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Page 6: Documentation -->
+    <div id="docs" class="page-section">
+        <section class="relative min-h-screen flex items-center">
+            <div class="container mx-auto px-4 py-20">
+                <div class="max-w-5xl mx-auto text-center">
+                    <h1 class="orbitron text-4xl md:text-7xl font-bold mb-8">
+                        Documentation & <span class="text-gradient">Resources</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-12">
+                        Everything you need to get started and succeed with Infivista
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-16">
+                        <!-- Product Demo (removed from Documentation; use Watch Demo in header) -->
+
+                        <div class="bg-glass rounded-2xl p-8 text-center">
+                            <div class="h-16 w-16 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <h3 class="orbitron text-xl font-bold mb-4">Documentation</h3>
+                            <p class="text-gray-400 mb-6">Comprehensive guides and tutorials</p>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition font-semibold nav-tab" data-page="docs" data-scroll="#product-demo">
+                                    Browse Docs
+                                </button>
+                                <!-- Play Demo button removed; use Watch Demo in header -->
+                            </div>
+                        </div>
+                        <div class="bg-glass rounded-2xl p-8 text-center">
+                            <div class="h-16 w-16 bg-cyan-500/20 rounded-xl flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="orbitron text-xl font-bold mb-4">API Reference</h3>
+                            <p class="text-gray-400 mb-6">Complete API documentation</p>
+                            <button class="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-lg transition font-semibold">
+                                View APIs
+                            </button>
+                        </div>
+                        <div class="bg-glass rounded-2xl p-8 text-center">
+                            <div class="h-16 w-16 bg-purple-500/20 rounded-xl flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="orbitron text-xl font-bold mb-4">Knowledge Base</h3>
+                            <p class="text-gray-400 mb-6">FAQs and troubleshooting</p>
+                            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg transition font-semibold">
+                                Explore KB
+                            </button>
+                        </div>
+                        <div class="bg-glass rounded-2xl p-8 text-center">
+                            <div class="h-16 w-16 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="orbitron text-xl font-bold mb-4">Developer Hub</h3>
+                            <p class="text-gray-400 mb-6">Code samples and SDKs</p>
+                            <button class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg transition font-semibold">
+                                Visit Hub
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Page 7: Partners -->
+    <div id="partners" class="page-section">
+        <section class="relative min-h-screen flex items-center">
+            <div class="container mx-auto px-4 py-20">
+                <div class="max-w-5xl mx-auto text-center">
+                    <h1 class="orbitron text-4xl md:text-7xl font-bold mb-8">
+                        Partner <span class="text-gradient">Program</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-12">
+                        Join our ecosystem and grow your business with Infivista
+                    </p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
+                        <div class="bg-glass rounded-2xl p-10">
+                            <h3 class="orbitron text-3xl font-bold mb-6">Technology Partners</h3>
+                            <p class="text-xl text-gray-400 mb-8">Build integrated solutions and expand your market reach</p>
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl transition text-lg font-semibold">
+                                Apply Now
+                            </button>
+                        </div>
+                        <div class="bg-glass rounded-2xl p-10">
+                            <h3 class="orbitron text-3xl font-bold mb-6">Resellers</h3>
+                            <p class="text-xl text-gray-400 mb-8">Attractive margins, training, and marketing support</p>
+                            <button class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl transition text-lg font-semibold">
+                                Become a Reseller
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Page 8: Support -->
+    <div id="support" class="page-section">
+        <section class="relative min-h-screen flex items-center">
+            <div class="container mx-auto px-4 py-20">
+                <div class="max-w-5xl mx-auto text-center">
+                    <h1 class="orbitron text-4xl md:text-7xl font-bold mb-8">
+                        Customer <span class="text-gradient">Support</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-12">
+                        Get the help you need, when you need it
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                        <div class="bg-glass rounded-2xl p-8 text-center">
+                            <h3 class="orbitron text-2xl font-bold mb-4">Standard (Free)</h3>
+                            <p class="text-gray-400 mb-6">Email, KB, community, business hours</p>
+                            <button class="w-full bg-slate-700 hover:bg-slate-600 text-white py-4 rounded-xl transition text-lg font-semibold">
+                                Get Started
+                            </button>
+                        </div>
+                        <div class="bg-glass rounded-2xl p-8 text-center">
+                            <h3 class="orbitron text-2xl font-bold mb-4">Business</h3>
+                            <p class="text-gray-400 mb-6">24/7 phone, 4-hour SLA, priority queue</p>
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl transition text-lg font-semibold">
+                                Subscribe Now
+                            </button>
+                        </div>
+                        <div class="bg-glass rounded-2xl p-8 text-center">
+                            <h3 class="orbitron text-2xl font-bold mb-4">Enterprise</h3>
+                            <p class="text-gray-400 mb-6">TAM, 1-hour SLA, custom SLA</p>
+                            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-4 rounded-xl transition text-lg font-semibold">
+                                Contact Sales
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenu.classList.remove('open');
+            }
+        });
+
+        // Navigation functionality
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // Update nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab
+            document.querySelectorAll(`[data-page="${pageId}"]`).forEach(tab => {
+                if (tab.classList.contains('nav-tab')) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Close mobile menu
+            mobileMenu.classList.remove('open');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Add click listeners to all nav tabs
+            document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = tab.getAttribute('data-page');
+                    if (pageId) {
+                        showPage(pageId);
+                        // Optional scroll target after page is shown
+                        if (tab.dataset && tab.dataset.scroll) {
+                            setTimeout(() => {
+                                const el = document.querySelector(tab.dataset.scroll);
+                                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, 350);
+                        }
+                    }
+                });
+            });
+
+            // Create cost comparison chart
+            const ctx = document.getElementById('costChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Self-host (Low)', 'Self-host (High)', 'Infivista Managed'],
+                    datasets: [{
+                        label: 'Monthly Cost (₹000s)',
+                        data: [34, 61, 18],
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(239, 68, 68, 0.9)',
+                            'rgba(34, 197, 94, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgb(239, 68, 68)',
+                            'rgb(239, 68, 68)',
+                            'rgb(34, 197, 94)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+            // If the URL contains a hash pointing to docs or the demo, open and scroll
+            function openHashTarget() {
+                const hash = location.hash;
+                if (!hash) return;
+                if (hash === '#docs' || hash === '#product-demo' || hash === '#product-demo' ) {
+                    showPage('docs');
+                    setTimeout(() => {
+                        const el = document.querySelector('#product-demo');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 250);
+                }
+            }
+
+            window.addEventListener('hashchange', openHashTarget);
+            openHashTarget();
+
+            // (removed) Auto-open docs demo on root to keep Home visible after refresh
+
+            // Watch Demo / Play Demo handlers - open Vimeo modal player
+            function openVimeoPlayer(){
+                const modal = document.getElementById('vimeo-player-modal');
+                if(!modal) return;
+                const iframe = modal.querySelector('iframe');
+                // Vimeo video id from user
+                iframe.src = 'https://player.vimeo.com/video/1124575910?autoplay=1&muted=0';
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            function closeVimeoPlayer(){
+                const modal = document.getElementById('vimeo-player-modal');
+                if(!modal) return;
+                const iframe = modal.querySelector('iframe');
+                iframe.src = '';
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+
+            // Expose to global so other scripts can call them and attach handlers
+            window.openVimeoPlayer = openVimeoPlayer;
+            window.closeVimeoPlayer = closeVimeoPlayer;
+
+            // Attach close handlers (elements exist by DOMContentLoaded)
+            const closeBtnEl = document.getElementById('close-vimeo-player');
+            if (closeBtnEl) closeBtnEl.addEventListener('click', closeVimeoPlayer);
+            const modalEl = document.getElementById('vimeo-player-modal');
+            if (modalEl) modalEl.addEventListener('click', (e) => { if (e.target.id === 'vimeo-player-modal') closeVimeoPlayer(); });
+
+            const watchBtn = document.getElementById('watch-demo-btn');
+            if (watchBtn) watchBtn.addEventListener('click', (e)=>{e.preventDefault();openVimeoPlayer();});
+
+            // Play Demo card button removed; no handler required
+
+            const bannerBtn = document.getElementById('banner-watch-demo');
+            if (bannerBtn) bannerBtn.addEventListener('click', (e)=>{e.preventDefault();openVimeoPlayer();});
+        });
+    </script>
+    
+    <!-- Vimeo Player Modal -->
+    <div id="vimeo-player-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80">
+        <div class="w-full max-w-4xl mx-4 bg-transparent">
+            <div class="relative pb-[56.25%]">
+                <iframe class="absolute inset-0 w-full h-full rounded-xl" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Product demo (Vimeo)"></iframe>
+            </div>
+            <div class="mt-4 text-right">
+                <button id="close-vimeo-player" class="px-3 py-2 rounded bg-white/10">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('close-vimeo-player')?.addEventListener('click', closeVimeoPlayer);
+        document.getElementById('vimeo-player-modal')?.addEventListener('click', (e)=>{ if(e.target.id === 'vimeo-player-modal') closeVimeoPlayer(); });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96faeb3b22e0c508',t:'MTc1NTI4NDI1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
+<!-- Schedule Demo Modal -->
+<div id="schedule-demo-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+    <div class="bg-card-gradient rounded-2xl p-6 w-full max-w-xl mx-4">
+        <h3 class="text-xl font-semibold mb-4">Request a Demo</h3>
+        <form id="schedule-demo-form" class="space-y-3">
+            <div>
+                <label class="block text-sm">Full name</label>
+                <input name="name" required class="w-full mt-1 p-2 rounded bg-slate-800 border border-slate-700" />
+            </div>
+            <div>
+                <label class="block text-sm">Email</label>
+                <input type="email" name="email" required class="w-full mt-1 p-2 rounded bg-slate-800 border border-slate-700" />
+            </div>
+            <div>
+                <label class="block text-sm">Company</label>
+                <input name="company" class="w-full mt-1 p-2 rounded bg-slate-800 border border-slate-700" />
+            </div>
+            <div>
+                <label class="block text-sm">Preferred date/time</label>
+                <input name="preferred" placeholder="e.g. 2025-10-10 10:00AM" class="w-full mt-1 p-2 rounded bg-slate-800 border border-slate-700" />
+            </div>
+            <div>
+                <label class="block text-sm">Message</label>
+                <textarea name="message" class="w-full mt-1 p-2 rounded bg-slate-800 border border-slate-700"></textarea>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button type="submit" class="bg-blue-600 px-4 py-2 rounded text-white">Submit</button>
+                <button type="button" id="cancel-schedule" class="px-4 py-2 rounded border border-slate-600">Cancel</button>
+            </div>
+            <div id="schedule-msg" class="text-sm text-green-400 mt-2 hidden">Saved — the team will review this request.</div>
+        </form>
+    </div>
+</div>
+
+<!-- Admin Page Section -->
+<div id="admin" class="page-section">
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-semibold">Admin: Demo Requests</h2>
+                <p class="text-sm text-gray-400">Saved demo requests (stored in browser localStorage).</p>
+            </div>
+            <div class="mb-4 flex justify-end space-x-2">
+                <button id="export-requests" class="px-3 py-2 rounded bg-slate-700 text-white">Export JSON</button>
+                <button id="clear-requests" class="px-3 py-2 rounded border border-slate-600">Clear All</button>
+            </div>
+            <div id="requests-list" class="space-y-3"></div>
+        </div>
+    </section>
+</div>
+
+<script>
+// Demo request storage and admin rendering
+function getRequests(){
+    try{const j=localStorage.getItem('infivista_requests');return j?JSON.parse(j):[];}catch(e){return[]}
+}
+function saveRequests(list){localStorage.setItem('infivista_requests', JSON.stringify(list));}
+function renderRequests(){const container=document.getElementById('requests-list');if(!container)return;const list=getRequests();container.innerHTML='';if(list.length===0){container.innerHTML='<div class="text-sm text-gray-400">No requests yet.</div>';return;}list.slice().reverse().forEach(r=>{const el=document.createElement('div');el.className='bg-slate-800 p-4 rounded';el.innerHTML=`<div class="flex justify-between"><div><div class="font-semibold">${escapeHtml(r.name||'[no name]')}</div><div class="text-xs text-gray-400">${escapeHtml(r.email||'')}</div></div><div class="text-xs text-gray-400">${escapeHtml(r.preferred||'')}</div></div><div class="mt-2 text-sm text-gray-300">${escapeHtml(r.message||'')}</div><div class="mt-2 text-xs text-gray-500">${new Date(r.ts).toLocaleString()}</div>`;container.appendChild(el);});}
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    // Open modal
+    const openBtn=document.getElementById('schedule-demo-btn');
+    const modal=document.getElementById('schedule-demo-modal');
+    const form=document.getElementById('schedule-demo-form');
+    const cancelBtn=document.getElementById('cancel-schedule');
+    const msg=document.getElementById('schedule-msg');
+    openBtn && openBtn.addEventListener('click', (e)=>{e.preventDefault();modal.classList.remove('hidden');modal.classList.add('flex');});
+    cancelBtn && cancelBtn.addEventListener('click', (e)=>{modal.classList.add('hidden');modal.classList.remove('flex');});
+
+    form && form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form));
+        if(!data.name || !data.email){alert('Please provide name and email');return}
+        const list = getRequests();
+        list.push(Object.assign({ts:Date.now()}, data));
+        saveRequests(list);
+        msg.classList.remove('hidden');
+        setTimeout(()=>{msg.classList.add('hidden');modal.classList.add('hidden');modal.classList.remove('flex');form.reset();renderRequests();},800);
+    });
+
+    // Admin controls
+    document.getElementById('export-requests')?.addEventListener('click', ()=>{
+        const data=getRequests();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='infivista_requests.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+    });
+    document.getElementById('clear-requests')?.addEventListener('click', ()=>{if(!confirm('Clear all saved requests?'))return;localStorage.removeItem('infivista_requests');renderRequests();});
+
+    // Render admin list if admin page present
+    renderRequests();
+});
+</script>
