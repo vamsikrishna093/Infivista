@@ -50,3 +50,17 @@ Notes
 
 - Submissions from the Schedule Demo form are stored in browser localStorage (client-side). To centralize requests, add a small backend endpoint.
 - If you want, I can add `docker-compose.yml` or a small server to persist demo requests centrally.
+
+Docker Compose
+
+If you prefer to manage the service with Docker Compose, a `docker-compose.yml` is included. Use these commands from the repository root:
+
+    # Build and start in background
+    docker compose up -d --build
+
+    # Stop and remove containers
+    docker compose down
+
+    # View logs
+    docker compose logs -f
+

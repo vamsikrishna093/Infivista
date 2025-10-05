@@ -299,13 +299,11 @@
                     <button class="nav-tab w-full text-left px-4 py-3 rounded-lg font-medium" data-page="support">Support</button>
                 </div>
                 
-                <div class="space-y-3">
-                    <button class="w-full border border-blue-400 text-blue-400 px-6 py-3 rounded-full font-medium hover:bg-blue-400/10 transition">
+                    <div class="space-y-3">
+                    <a href="#" class="w-full block text-center border border-blue-400 text-blue-400 px-6 py-3 rounded-full font-medium hover:bg-blue-400/10 transition" id="start-free-cta">
                         Start Free
-                    </button>
-                    <button class="w-full bg-accent-gradient px-6 py-3 rounded-full font-medium hover:opacity-90 transition">
-                        Book Demo
-                    </button>
+                    </a>
+                    <!-- Book Demo removed (use Watch Demo in header) -->
                 </div>
             </div>
         </div>
@@ -529,16 +527,9 @@
                     <p class="text-xl md:text-2xl text-gray-300 mb-12">
                         Start getting business outcomes in under 1 hour.
                     </p>
-                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                        <button class="bg-accent-gradient px-10 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition pulse-glow">
-                            Start Free
-                        </button>
-                        <button class="border-2 border-blue-400 text-blue-400 px-10 py-4 rounded-full font-semibold text-lg hover:bg-blue-400/10 transition nav-tab" data-page="tiers">
-                            See Tiers
-                        </button>
-                        <button class="bg-slate-800 text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-slate-700 transition">
-                            Book Demo
-                        </button>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="#" id="start-free-hero" class="bg-accent-gradient px-10 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition pulse-glow">Start Free</a>
+                        <button class="border-2 border-blue-400 text-blue-400 px-10 py-4 rounded-full font-semibold text-lg hover:bg-blue-400/10 transition nav-tab" data-page="tiers">See Tiers</button>
                     </div>
                 </div>
             </div>
@@ -1021,12 +1012,60 @@
                         Enterprise-grade observability architecture built for scale and security
                     </p>
                     <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl transition text-lg font-semibold">
-                            Security Whitepaper
-                        </button>
-                        <button class="bg-purple-600 hover:bg-purple-700 text-white px-10 py-4 rounded-xl transition text-lg font-semibold">
-                            Sample Dashboards
-                        </button>
+                        <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl transition text-lg font-semibold nav-tab" data-page="security">Security Whitepaper</a>
+                        <a href="#" class="bg-purple-600 hover:bg-purple-700 text-white px-10 py-4 rounded-xl transition text-lg font-semibold nav-tab" data-page="dashboards">Sample Dashboards</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Security Whitepaper Page -->
+    <div id="security" class="page-section">
+        <section class="py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="orbitron text-3xl font-bold mb-4">Security & Compliance</h2>
+                <p class="text-gray-400 mb-4">Infivista is designed with defense-in-depth: encrypted transport (TLS), role-based access control, audit logging, and secure defaults. We recommend deploying behind your WAF and using private S3 buckets for sensitive artifacts.</p>
+                <h3 class="text-xl font-semibold mt-6">Key controls</h3>
+                <ul class="list-disc list-inside text-gray-300">
+                    <li>TLS for all endpoints (HTTPS)</li>
+                    <li>RBAC and single-sign-on (SAML / OIDC)</li>
+                    <li>Audit logging and immutable retention</li>
+                    <li>Encrypted storage at rest (cloud provider-managed keys or customer-managed)</li>
+                    <li>Network segmentation and egress filtering</li>
+                </ul>
+                <h3 class="text-xl font-semibold mt-6">Compliance</h3>
+                <p class="text-gray-400">Infivista helps meet common standards (ISO27001, SOC2) by providing logging, monitoring, and retention policies that support evidence collection and incident investigations.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Sample Dashboards Page -->
+    <div id="dashboards" class="page-section">
+        <section class="py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="orbitron text-3xl font-bold mb-4">Sample Dashboards</h2>
+                <p class="text-gray-400 mb-6">Explore quick-start dashboard templates you can import into Grafana or your dashboarding tool.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-glass p-6 rounded">
+                        <h3 class="font-semibold">Observability Overview</h3>
+                        <p class="text-sm text-gray-300">Key service health, latency percentiles, error rates, and throughput for a multi-service environment.</p>
+                        <a class="text-cyan-400 text-sm mt-3 inline-block" href="#">Open Observability Dashboard →</a>
+                    </div>
+                    <div class="bg-glass p-6 rounded">
+                        <h3 class="font-semibold">Prediction & Anomaly Dashboard</h3>
+                        <p class="text-sm text-gray-300">Time-series forecasting with model output, anomaly detection markers, and actionable alerts for predicted SLA breaches.</p>
+                        <a class="text-cyan-400 text-sm mt-3 inline-block" href="#">Open Prediction Dashboard →</a>
+                    </div>
+                    <div class="bg-glass p-6 rounded">
+                        <h3 class="font-semibold">Infrastructure Cost & Usage</h3>
+                        <p class="text-sm text-gray-300">Cost correlated with metrics and traces to identify expensive services and optimize spend.</p>
+                        <a class="text-cyan-400 text-sm mt-3 inline-block" href="#">Open Cost Dashboard →</a>
+                    </div>
+                    <div class="bg-glass p-6 rounded">
+                        <h3 class="font-semibold">Security & Audit</h3>
+                        <p class="text-sm text-gray-300">Alerting and drill-downs for suspicious activity, failed logins, and audit trails.</p>
+                        <a class="text-cyan-400 text-sm mt-3 inline-block" href="#">Open Security Dashboard →</a>
                     </div>
                 </div>
             </div>
@@ -1091,16 +1130,7 @@
                         Everything you need to get started and succeed with Infivista
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-16">
-                        <!-- Product Demo embed moved to top for visibility -->
-                        <div id="product-demo" class="max-w-4xl mx-auto col-span-1 md:col-span-4 bg-glass rounded-2xl p-8 mb-8">
-                            <h3 class="orbitron text-2xl font-bold mb-4">Product Demo</h3>
-                            <p class="text-gray-400 mb-4">Watch a short product demo below. The video file is served from the site root.</p>
-                            <video controls preload="metadata" class="w-full rounded-xl mb-4">
-                                <source src="demo.mp4" type="video/mp4">
-                                Your browser does not support the video tag. <a href="demo.mp4" class="text-blue-400 underline">Download demo</a>
-                            </video>
-                            <p class="text-sm text-gray-400">Note: autoplay with sound is blocked by many browsers; add <code>muted</code> and <code>playsinline</code> if you want muted autoplay.</p>
-                        </div>
+                        <!-- Product Demo (removed from Documentation; use Watch Demo in header) -->
 
                         <div class="bg-glass rounded-2xl p-8 text-center">
                             <div class="h-16 w-16 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-6">
@@ -1114,10 +1144,7 @@
                                 <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition font-semibold nav-tab" data-page="docs" data-scroll="#product-demo">
                                     Browse Docs
                                 </button>
-                                <button id="play-demo-card-btn" class="w-full sm:w-40 bg-white/10 hover:bg-white/20 text-white py-3 rounded-lg transition font-semibold flex items-center justify-center space-x-2">
-                                    <svg class="w-5 h-5 text-gradient" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
-                                    <span>Play Demo</span>
-                                </button>
+                                <!-- Play Demo button removed; use Watch Demo in header -->
                             </div>
                         </div>
                         <div class="bg-glass rounded-2xl p-8 text-center">
@@ -1374,45 +1401,61 @@
 
             // (removed) Auto-open docs demo on root to keep Home visible after refresh
 
-            // Watch Demo button (header) - opens docs and scrolls to demo
+            // Watch Demo / Play Demo handlers - open Vimeo modal player
+            function openVimeoPlayer(){
+                const modal = document.getElementById('vimeo-player-modal');
+                if(!modal) return;
+                const iframe = modal.querySelector('iframe');
+                // Vimeo video id from user
+                iframe.src = 'https://player.vimeo.com/video/1124575910?autoplay=1&muted=0';
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            function closeVimeoPlayer(){
+                const modal = document.getElementById('vimeo-player-modal');
+                if(!modal) return;
+                const iframe = modal.querySelector('iframe');
+                iframe.src = '';
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+
+            // Expose to global so other scripts can call them and attach handlers
+            window.openVimeoPlayer = openVimeoPlayer;
+            window.closeVimeoPlayer = closeVimeoPlayer;
+
+            // Attach close handlers (elements exist by DOMContentLoaded)
+            const closeBtnEl = document.getElementById('close-vimeo-player');
+            if (closeBtnEl) closeBtnEl.addEventListener('click', closeVimeoPlayer);
+            const modalEl = document.getElementById('vimeo-player-modal');
+            if (modalEl) modalEl.addEventListener('click', (e) => { if (e.target.id === 'vimeo-player-modal') closeVimeoPlayer(); });
+
             const watchBtn = document.getElementById('watch-demo-btn');
-            if (watchBtn) {
-                watchBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showPage('docs');
-                    setTimeout(() => {
-                        const el = document.querySelector('#product-demo');
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 350);
-                });
-            }
+            if (watchBtn) watchBtn.addEventListener('click', (e)=>{e.preventDefault();openVimeoPlayer();});
 
-            // Play Demo button inside Documentation card
-            const playCardBtn = document.getElementById('play-demo-card-btn');
-            if (playCardBtn) {
-                playCardBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showPage('docs');
-                    setTimeout(() => {
-                        const el = document.querySelector('#product-demo');
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 350);
-                });
-            }
+            // Play Demo card button removed; no handler required
 
-            // Banner watch demo
             const bannerBtn = document.getElementById('banner-watch-demo');
-            if (bannerBtn) {
-                bannerBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showPage('docs');
-                    setTimeout(() => {
-                        const el = document.querySelector('#product-demo');
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 350);
-                });
-            }
+            if (bannerBtn) bannerBtn.addEventListener('click', (e)=>{e.preventDefault();openVimeoPlayer();});
         });
+    </script>
+    
+    <!-- Vimeo Player Modal -->
+    <div id="vimeo-player-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80">
+        <div class="w-full max-w-4xl mx-4 bg-transparent">
+            <div class="relative pb-[56.25%]">
+                <iframe class="absolute inset-0 w-full h-full rounded-xl" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Product demo (Vimeo)"></iframe>
+            </div>
+            <div class="mt-4 text-right">
+                <button id="close-vimeo-player" class="px-3 py-2 rounded bg-white/10">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('close-vimeo-player')?.addEventListener('click', closeVimeoPlayer);
+        document.getElementById('vimeo-player-modal')?.addEventListener('click', (e)=>{ if(e.target.id === 'vimeo-player-modal') closeVimeoPlayer(); });
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96faeb3b22e0c508',t:'MTc1NTI4NDI1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
